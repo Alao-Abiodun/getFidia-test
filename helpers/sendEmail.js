@@ -4,12 +4,12 @@ exports.sendMail = async (config) => {
   let account = await nodemailer.createTestAccount();
   try {
     const transporter = nodemailer.createTransport({
-      host: "payercoins.com",
+      host: "alao43844@gmail.com",
       port: 465,
       secure: true,
       auth: {
-        user: "hello@payercoins.com",
-        pass: "zEjP_f6MrLAw",
+        user: "alao43844@gmail.com",
+        pass: "abiodun1996",
       },
       tls: {
         rejectUnauthorized: false,
@@ -17,7 +17,7 @@ exports.sendMail = async (config) => {
     });
 
     const info = await transporter.sendMail({
-      from: "Payercoins hello@payercoins.com",
+      from: "getFidia alao43844@gmail.com",
       ...config,
     });
 
