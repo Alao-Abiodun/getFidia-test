@@ -7,6 +7,10 @@ const models = require("./models/index");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
 const { error } = require("./helpers/index");
+const { mongoUrl } = require("./constant/index");
+const config = {
+  mongoUrl,
+};
 const cors = require("cors");
 
 const server = new ApolloServer({
@@ -49,11 +53,7 @@ app.use(cors());
 server.applyMiddleware({ app });
 
 mongoose
-  .connect(
-    `mongodb+srv://grazac_store:12345@cluster0.rfnom.mongodb.net/getFidia_backend_DB?retryWrites=true&w=majority
-    `,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((res) => {
     console.log("MongoDB Connected");
     app.listen(4100, () => {
@@ -63,19 +63,3 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-// mongoose
-//   .connect(
-//     `mongodb+srv://grazac_store:12345@cluster0.rfnom.mongodb.net/getFidia_backend_DB?retryWrites=true&w=majority`,
-//     { useNewUrlParser: true }
-//   )
-//   .then(() => {
-//     console.log("MongoDB Connected");
-//     return server.listen(5000);
-//   })
-//   .then((res) => {
-//     console.log(`Server running at ${res.url}`);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
