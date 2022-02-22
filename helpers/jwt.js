@@ -1,5 +1,6 @@
 // @ts-nocheck
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const { privateKey, publicKey } = require("../constant/index");
 

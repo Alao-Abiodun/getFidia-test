@@ -7,10 +7,10 @@ const models = require("./models/index");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
 const { error } = require("./helpers/index");
-const { mongoUrl } = require("./constant/index");
-const config = {
-  mongoUrl,
-};
+require("dotenv").config();
+
+const { PORT, MONGO_URI } = process.env;
+
 const cors = require("cors");
 
 const server = new ApolloServer({
@@ -53,11 +53,11 @@ app.use(cors());
 server.applyMiddleware({ app });
 
 mongoose
-  .connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((res) => {
     console.log("MongoDB Connected");
-    app.listen(4100, () => {
-      console.log("🚀 Server ready at http://localhost:4100/graphql");
+    app.listen(PORT, () => {
+      console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
     });
   })
   .catch((err) => {
