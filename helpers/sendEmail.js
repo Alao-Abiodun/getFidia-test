@@ -1,15 +1,25 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
+
+const {
+  MAIL_HOST,
+  MAIL_PORT,
+  MAIL_USER,
+  MAIL_PASSWORD,
+  FROM_NAME,
+  FROM_EMAIL,
+} = process.env;
 
 exports.sendMail = async (config) => {
   let account = await nodemailer.createTestAccount();
   try {
     const transporter = nodemailer.createTransport({
-      host: "alao43844@gmail.com",
-      port: 465,
+      host: MAIL_HOST,
+      port: MAIL_PORT,
       secure: true,
       auth: {
-        user: "alao43844@gmail.com",
-        pass: "abiodun1996",
+        user: MAIL_USER,
+        pass: MAIL_PASSWORD,
       },
       tls: {
         rejectUnauthorized: false,
@@ -17,7 +27,7 @@ exports.sendMail = async (config) => {
     });
 
     const info = await transporter.sendMail({
-      from: "getFidia alao43844@gmail.com",
+      from: `${FROM_NAME} ${FROM_EMAIL}`,
       ...config,
     });
 

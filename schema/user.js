@@ -8,10 +8,10 @@ const userSchema = gql`
   extend type Mutation {
     createUser(input: CreateUserInput): CreateUserResponse!
     login(input: LoginInput): LoginResponse!
-    verifyEmail(code: Int!): MutationResponse!
+    verifyEmail(input: VerifyEmailInput): verifyEmailResponse!
     resendEmailVerification(
       input: ResendEmailVerificationInput
-    ): MutationResponse!
+    ): resendEmailResponse!
   }
 
   type CreateUserResponse {
@@ -21,7 +21,17 @@ const userSchema = gql`
   }
 
   type LoginResponse {
+    message: String!
+    success: Boolean!
     token: String!
+  }
+
+  type verifyEmailResponse {
+    message: String!
+    success: Boolean!
+  }
+
+  type resendEmailResponse {
     message: String!
     success: Boolean!
   }
@@ -44,6 +54,10 @@ const userSchema = gql`
     password: String!
     mobile_number: String!
     country: String
+  }
+
+  input VerifyEmailInput {
+    code: String!
   }
 
   input LoginInput {

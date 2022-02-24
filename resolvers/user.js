@@ -16,9 +16,6 @@ const userResolver = {
       return user;
     },
     users: async (parent, {}, { models, payload }) => {
-      if (!payload) {
-        throw new AuthenticationError("Pls, login to view user details");
-      }
       const users = await models.User.fetchAllUsers();
       return users;
     },
@@ -37,15 +34,31 @@ const userResolver = {
         user,
       };
     },
-    login: async (_, { input }, { models }) => {
-      console.log("reached");
-      return await models.User.login(input);
-    },
-    verifyEmail: async (_, { code }, { models }) => {
-      return await models.User.verifyEmail(code);
+    verifyEmail: async (_, { input }, { models }) => {
+      console.log("checking input type", typeof input, input);
+      const verifiedUser = await models.User.verifyEmail(input);
+      return {
+        message: "User verified successfully",
+        success: true,
+        // verifiedUser,
+      };
     },
     resendEmailVerification: async (_, { input }, { models }) => {
-      return await models.User.resendEmailVerification(input);
+      const resendEmailUser = await models.User.resendEmailVerification(input);
+      return {
+        message: "A new verification email has been sent successfully",
+        success: true,
+        resendEmailUser,
+      };
+    },
+    login: async (_, { input }, { models }) => {
+      console.log("reached");
+      const loginUser = await models.User.login(input);
+      return {
+        message: "User loggedIn successfully",
+        success: true,
+        loginUser,
+      };
     },
   },
 };
