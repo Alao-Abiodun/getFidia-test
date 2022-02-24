@@ -17,6 +17,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   tracing: true,
+  introspection: true,
+  playground: true,
   context: async ({ req }) => {
     const { payload } = await models.User.verifyToken(req);
     return {
